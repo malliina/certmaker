@@ -1,6 +1,6 @@
 package com.mle.cert
 
-import java.nio.file.Path
+import java.nio.file.{Files, Path}
 
 import com.mle.cmd.{CommandResponse, Shell}
 import com.mle.file.{FileUtilities, StorageFile}
@@ -36,7 +36,9 @@ object CertMaker {
     val unifiedFileName = appendName("unified.pem")
     val unified = path(unifiedFileName)
     val pkcsFileName = appendName("keystore.p12")
+    val pkcsFile = path(pkcsFileName)
     val jksFileName = appendName("keystore.jks")
+    val jksFile = path(jksFileName)
 
     val meta = Seq(
       "Unified Certificate" -> unifiedFileName,
@@ -93,6 +95,8 @@ object CertMaker {
   def createKeyStores(shell: Shell, info: CertRequestInfo, files: CertFiles): CommandResponse = {
     merge(files.cert, caCert, files.unified)
     val pkcsPass = info.pkcs12Password
+    Files.deleteIfExists(files.pkcsFile)
+    Files.deleteIfExists(files.jksFile)
     val keyStoreCommands = Seq(
       pkcsCmd(files.unifiedFileName, files.keyFileName, files.pkcsFileName, pkcsPass),
       jksCmd(files.pkcsFileName, pkcsPass, files.jksFileName, info.jksPassword))
