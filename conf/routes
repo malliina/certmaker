@@ -2,5 +2,4 @@ GET         /                    controllers.Certs.certs
 POST        /add                 controllers.Certs.submit
 GET         /run                 controllers.Runner.run
 GET         /runSocket           controllers.Runner.openSocket
-GET         /done                controllers.Certs.done
 GET         /assets/*file        controllers.Assets.at(path = "/public", file)

@@ -49,6 +49,4 @@ object Certs extends Controller with Log {
       }
     )
   })
-
-  def done = Action(Ok(html.done(None, CertMaker.meta)))
 }
