@@ -1,0 +1,28 @@
+@(tabName: String)(content: Html)
+@basePage("Certificate Maker") {
+    <div class="navbar navbar-default navbar-static-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="@routes.Certs.certs()">Home</a>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    @navItem("Certificates", routes.Certs.certs(), "home")
+                </ul>
+            </div>
+        </div>
+    </div>
+    <section>
+        <div class="container">
+        @content
+        </div>
+    </section>
+}
+    @navItem(title: String, href: Call, glyphSuffix: String) = {
+    @bs.navItem(title, title.toLowerCase, tabName, href, glyphSuffix)
+    }

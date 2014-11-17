@@ -1,0 +1,14 @@
+@(field: Field, label: String, placeHolder: String, defaultValue: String = "", typeName: String = "text")
+
+@if(field.hasErrors) {
+    @util.div("form-group has-error") {
+        <label for="@field.name">@label</label>
+        @bs.input(field, typeName, placeHolder, defaultValue = defaultValue)
+        @bs.helpSpan(field)
+    }
+} else {
+    @util.div("form-group") {
+        <label for="@field.name">@label</label>
+        @bs.input(field, typeName, placeHolder, defaultValue = defaultValue)
+    }
+}

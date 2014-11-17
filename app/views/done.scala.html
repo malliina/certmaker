@@ -1,0 +1,18 @@
+@(result: Option[com.mle.cmd.CommandResult], generated: Seq[com.mle.cert.Meta])
+
+@indexMain("done") {
+    @bs.headerRow("Done")
+    @bs.rowColumn("col-md-12") {
+        <p class="lead">Congratulations. Generated files.</p>
+        <table class="table table-striped table-hover table-responsive">
+            <thead>
+                <tr><th>Description</th><th>Path</th></tr>
+            </thead>
+            <tbody>
+                @for(pair <- generated){
+                    <tr><td>@pair.description</td><td>@pair.path</td></tr>
+                }
+            </tbody>
+        </table>
+    }
+}

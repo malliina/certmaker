@@ -1,0 +1,29 @@
+@(plan: Option[String], result: Seq[com.mle.cert.Meta])(implicit req: RequestHeader)
+
+@indexMain("run") {
+    @bs.statusHeaderRow("Output")
+    @bs.rowColumn("col-md-12"){
+        <div class="lead alert alert-success" role="alert" id="successFeedback" style="display: none"></div>
+        <div class="lead alert alert-danger" role="alert" id="errorFeedback" style="display: none"></div>
+    }
+    <div class="row" style="display: none" id="result">
+        @util.div("col-md-12"){
+            <table class="table table-striped table-hover table-responsive">
+                <thead>
+                    <tr><th>Description</th><th>Path</th></tr>
+                </thead>
+                <tbody>
+                @for(meta <- result){
+                    <tr><td>@meta.description</td><td>@meta.path<td></tr>
+                }
+                </tbody>
+            </table>
+        }
+    </div>
+    @bs.rowColumn("col-md-12") {
+        <pre id="output"></pre>
+        <span class="hidden" id="plan">@plan.getOrElse("")</span>
+        @util.script2("run.js")
+        @util.wsopen(Runner.wsUrl)
+    }
+}

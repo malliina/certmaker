@@ -1,0 +1,13 @@
+.idea/
+.idea/*
+*.iml
+lib_managed/
+target/
+.idea_modules/
+*.test
+*.jks
+*.pem
+credentials.txt
+logs
+dist
+certout
