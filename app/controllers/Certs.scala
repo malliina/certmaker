@@ -20,8 +20,7 @@ object Certs extends Controller with Log {
   val LOCALITY = "locality"
   val ORG = "org"
   val CN = "cn"
-  val PKCS_PASS = "pkcs_pass"
-  val JKS_PASS = "jks_pass"
+  val STORE_PASS = "store_pass"
 
   val form = Form(mapping(
     COUNTRY_CODE -> nonEmptyText,
@@ -29,8 +28,7 @@ object Certs extends Controller with Log {
     LOCALITY -> nonEmptyText,
     ORG -> nonEmptyText,
     CN -> nonEmptyText,
-    PKCS_PASS -> nonEmptyText,
-    JKS_PASS -> nonEmptyText(minLength = 6)
+    STORE_PASS -> nonEmptyText(minLength = 6)
   )(CertRequestInfo.apply)(CertRequestInfo.unapply))
 
   def certs = Action(Ok(html.certificates(form)))

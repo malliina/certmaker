@@ -77,11 +77,11 @@ object CertMaker {
   private def signCommand(request: String, caCert: String, caKey: String, certOut: String) =
     s"openssl x509 -req -in $request -days 3600 -CA $caCert -CAkey $caKey -set_serial 01 -out $certOut"
 
-  def pkcsCmd(cert: String, key: String, out: String, exportPassword: String) =
-    s"openssl pkcs12 -export -out $out -inkey $key -in $cert -password pass:$exportPassword"
+  def pkcsCmd(cert: String, key: String, out: String, storePass: String) =
+    s"openssl pkcs12 -export -out $out -inkey $key -in $cert -password pass:$storePass"
 
-  def jksCmd(srcStore: String, srcStorePass: String, destStore: String, destStorePass: String, destStoreType: String = "JKS", srcStoreType: String = "PKCS12") =
-    s"keytool -importkeystore -srckeystore $srcStore -srcstorepass $srcStorePass -srcstoretype $srcStoreType -destkeystore $destStore -deststorepass $destStorePass -deststoretype $destStoreType -noprompt"
+  def jksCmd(srcStore: String, destStore: String, storePass: String, destStoreType: String = "JKS", srcStoreType: String = "PKCS12") =
+    s"keytool -importkeystore -srckeystore $srcStore -srcstorepass $storePass -srcstoretype $srcStoreType -destkeystore $destStore -deststorepass $storePass -deststoretype $destStoreType -noprompt"
 
   def run(info: CertRequestInfo): CommandResponse = {
     val shell = new Shell(certOutDir)
@@ -94,12 +94,12 @@ object CertMaker {
 
   def createKeyStores(shell: Shell, info: CertRequestInfo, files: CertFiles): CommandResponse = {
     merge(files.cert, caCert, files.unified)
-    val pkcsPass = info.pkcs12Password
+    val storePassword = info.storePassword
     Files.deleteIfExists(files.pkcsFile)
     Files.deleteIfExists(files.jksFile)
     val keyStoreCommands = Seq(
-      pkcsCmd(files.unifiedFileName, files.keyFileName, files.pkcsFileName, pkcsPass),
-      jksCmd(files.pkcsFileName, pkcsPass, files.jksFileName, info.jksPassword))
+      pkcsCmd(files.unifiedFileName, files.keyFileName, files.pkcsFileName, storePassword),
+      jksCmd(files.pkcsFileName, files.jksFileName, storePassword))
     shell.sequence(keyStoreCommands, logCommand = false)
   }
 

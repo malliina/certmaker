@@ -9,8 +9,7 @@
                 @bs.basicFormText(form(Certs.LOCALITY), "Locality", "Espoo", "Espoo")
                 @bs.basicFormText(form(Certs.ORG), "Organization", "Skogberg Labs", "Skogberg Labs")
                 @bs.basicFormText(form(Certs.CN), "Common Name", "Michael", "Michael")
-                @bs.basicFormText(form(Certs.PKCS_PASS), "PKCS12 Password", "top secret", typeName = "password")
-                @bs.basicFormText(form(Certs.JKS_PASS), "JKS Password", "classified", typeName = "password")
+                @bs.basicFormText(form(Certs.STORE_PASS), "Keystore Password", "at least 6 characters", typeName = "password")
                 <button type="submit" class="btn btn-primary">Create</button>
             </form>
         }

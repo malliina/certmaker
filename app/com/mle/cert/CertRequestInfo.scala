@@ -10,8 +10,7 @@ case class CertRequestInfo(countryCode: String,
                            locality: String,
                            organization: String,
                            commonName: String,
-                           pkcs12Password: String,
-                           jksPassword: String)
+                           storePassword: String)
 
 object CertRequestInfo {
   implicit val json = Json.format[CertRequestInfo]
